@@ -5,6 +5,7 @@ from scripts.settings import *
 from scripts.tile_map import TileMap
 from scripts.player import Player
 from scripts.hook import Hook
+from scripts.utils import load_image
 
 
 class Game:
@@ -28,6 +29,16 @@ class Game:
             "left_click": False,
             "right_click": False,
         }
+
+        # 素材
+        self.assets = {
+            "cursor": load_image("assets/cursor.png")
+        }
+
+        # マウス
+        pygame.mouse.set_visible(False)     # マウスカーソル非表示
+        self.mouse_pos = [0, 0]
+        self.cursor_rect = self.assets["cursor"].get_rect(center=self.mouse_pos)
 
         # タイルマップ
         self.tile_map = TileMap(self, tile_size=TILE_SIZE)
@@ -97,9 +108,13 @@ class Game:
             self.hook.update()
             self.hook.render(self.screen)
 
+            # マウス
+            self.mouse_pos = pygame.mouse.get_pos()
+            self.cursor_rect.center = self.mouse_pos
+            self.screen.blit(self.assets["cursor"], self.cursor_rect)
+
             # イベントの取得
             self.get_events()
-            self.screen.fill(COLORS["black"])
 
             # 更新
             self.clock.tick(FPS)
