@@ -1,4 +1,5 @@
 import pygame
+import csv
 from scripts.settings import *
 
 
@@ -14,8 +15,8 @@ class Tile:
         self.image.fill(COLORS["green"])
         self.rect = self.image.get_rect(topleft=self.pos)
 
-    def render(self, surface):
-        surface.blit(self.image, self.pos)
+    def render(self, surface, offset=(0, 0)):
+        surface.blit(self.image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
 
 class TileMap:
@@ -46,12 +47,18 @@ class TileMap:
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ]
 
+        tile_map = []
+        with open("assets/map/map.csv", newline='') as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                tile_map.append([int(cell) for cell in row])
+
         for row_index, row in enumerate(tile_map):
             for col_index, col in enumerate(row):
                 if col == 1:
                     tile = Tile(self.game, (col_index * self.tile_size, row_index * self.tile_size), self.tile_size)
                     self.tile_list.append(tile)
 
-    def render(self, surface):
+    def render(self, surface, offset=(0, 0)):
         for tile in self.tile_list:
-            tile.render(surface)
+            tile.render(surface, offset)

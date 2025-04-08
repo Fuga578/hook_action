@@ -32,13 +32,17 @@ class Game:
 
         # 素材
         self.assets = {
-            "cursor": load_image("assets/cursor.png")
+            "cursor": load_image("assets/img/cursor/cursor.png")
         }
 
         # マウス
         pygame.mouse.set_visible(False)     # マウスカーソル非表示
         self.mouse_pos = [0, 0]
         self.cursor_rect = self.assets["cursor"].get_rect(center=self.mouse_pos)
+
+        # スクロール
+        self.scroll = [0, 0]
+        self.render_scroll = [0, 0]
 
         # タイルマップ
         self.tile_map = TileMap(self, tile_size=TILE_SIZE)
@@ -97,16 +101,21 @@ class Game:
             # 背景の塗りつぶし
             self.screen.fill(COLORS["black"])
 
+            # スクロール
+            self.scroll[0] += (self.player.rect.centerx - self.screen.get_width() / 2 - self.scroll[0]) / SCROLL_DELAY
+            self.scroll[1] += (self.player.rect.centery - self.screen.get_height() / 2 - self.scroll[1]) / SCROLL_DELAY
+            self.render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
+
             # タイルマップ
-            self.tile_map.render(self.screen)
+            self.tile_map.render(self.screen, offset=self.render_scroll)
 
             # プレイヤー
             self.player.update()
-            self.player.render(self.screen)
+            self.player.render(self.screen, offset=self.render_scroll)
 
             # フック
             self.hook.update()
-            self.hook.render(self.screen)
+            self.hook.render(self.screen, offset=self.render_scroll)
 
             # マウス
             self.mouse_pos = pygame.mouse.get_pos()

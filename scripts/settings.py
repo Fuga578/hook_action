@@ -25,3 +25,6 @@ ANGLE_VELOCITY_DAMPING = 0.99
 
 # 振り子制御
 SWING_FORCE = 0.3
+
+# カメラスクロール遅れ
+SCROLL_DELAY = 30

@@ -38,8 +38,8 @@ class Hook:
 
             # player -> mouse ベクトル
             vector = pygame.math.Vector2(
-                mx - self.game.player.rect.centerx,
-                my - self.game.player.rect.centery
+                mx - (self.game.player.rect.centerx - self.game.render_scroll[0]),
+                my - (self.game.player.rect.centery - self.game.render_scroll[1])
             ).normalize()
             self.velocity[0] = vector.x * self.speed
             self.velocity[1] = vector.y * self.speed
@@ -51,10 +51,13 @@ class Hook:
                 self.is_fixed = True
                 break
 
-    def render(self, surface):
+    def render(self, surface, offset=(0, 0)):
         if self.is_shooting or self.is_fixed:
-            surface.blit(self.image, self.pos)
-            pygame.draw.line(surface, COLORS["white"], self.game.player.rect.center, self.rect.center)
+            surface.blit(self.image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+            pygame.draw.line(surface,
+                             COLORS["white"],
+                             (self.game.player.rect.centerx - offset[0], self.game.player.rect.centery - offset[1]),
+                             (self.rect.centerx - offset[0], self.rect.centery - offset[1]))
 
     def update(self):
         if self.is_shooting:

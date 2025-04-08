@@ -289,8 +289,8 @@ class Player:
         self.rect.y = self.pos[1]
         self.collide("vertical")
 
-    def render(self, surface):
-        surface.blit(self.image, self.pos)
+    def render(self, surface, offset=(0, 0)):
+        surface.blit(self.image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
     def update(self):
 
