@@ -41,7 +41,7 @@ class Game:
         self.cursor_rect = self.assets["cursor"].get_rect(center=self.mouse_pos)
 
         # スクロール
-        self.scroll = [0, 0]
+        self.scroll = [500, 2000]
         self.render_scroll = [0, 0]
 
         # タイルマップ
@@ -49,7 +49,7 @@ class Game:
         self.tile_map.load()
 
         # プレイヤー
-        self.player = Player(self, pos=(100, 200), size=(20, 20))
+        self.player = Player(self, pos=(500, 2000), size=(20, 20))
 
         # フック
         self.hook = Hook(self)

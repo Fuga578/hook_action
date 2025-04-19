@@ -100,10 +100,10 @@ class Player:
                     if self.velocity[0] > 0:
                         self.rect.right = tile.rect.left
                     self.pos[0] = self.rect.x
-                    self.state = PlayerState.IDLE
                     if self.state == PlayerState.PULL:
                         self.game.hook.is_fixed = False
                         self.velocity = [0, 0]
+                    self.state = PlayerState.IDLE
                     break
 
         # 縦方向あたり判定
@@ -120,10 +120,10 @@ class Player:
                         self.is_ground = True
                     self.velocity[1] = 0
                     self.pos[1] = self.rect.y
-                    self.state = PlayerState.IDLE
                     if self.state == PlayerState.PULL:
                         self.game.hook.is_fixed = False
                         self.velocity = [0, 0]
+                    self.state = PlayerState.IDLE
                     break
 
     def idle(self):
