@@ -5,7 +5,7 @@ from scripts.settings import *
 from scripts.tile_map import TileMap
 from scripts.player import Player
 from scripts.hook import Hook
-from scripts.utils import load_image
+from scripts.utils import load_image, load_images
 
 
 class Game:
@@ -32,7 +32,8 @@ class Game:
 
         # 素材
         self.assets = {
-            "cursor": load_image("assets/img/cursor/cursor.png")
+            "cursor": load_image("assets/img/cursor/cursor.png"),
+            "tile": load_images("assets/img/tile", img_size=(TILE_SIZE, TILE_SIZE)),
         }
 
         # マウス

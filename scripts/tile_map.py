@@ -5,14 +5,15 @@ from scripts.settings import *
 
 class Tile:
 
-    def __init__(self, game, pos, tile_size):
+    def __init__(self, game, image, pos, tile_size):
         self.game = game
+        self.image = image
         self.pos = list(pos)
         self.tile_size = tile_size
 
         # 画像
-        self.image = pygame.Surface((self.tile_size, self.tile_size))
-        self.image.fill(COLORS["green"])
+        # self.image = pygame.Surface((self.tile_size, self.tile_size))
+        # self.image.fill(COLORS["green"])
         self.rect = self.image.get_rect(topleft=self.pos)
 
     def render(self, surface, offset=(0, 0)):
@@ -37,8 +38,10 @@ class TileMap:
 
         for row_index, row in enumerate(tile_map):
             for col_index, col in enumerate(row):
-                if col == 1:
-                    tile = Tile(self.game, (col_index * self.tile_size, row_index * self.tile_size), self.tile_size)
+                if col != 0:
+                    print(col)
+                    image = self.game.assets["tile"][int(col)-1]
+                    tile = Tile(self.game, image, (col_index * self.tile_size, row_index * self.tile_size), self.tile_size)
                     self.tile_list.append(tile)
 
     def render(self, surface, offset=(0, 0)):
